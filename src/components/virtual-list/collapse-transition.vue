@@ -27,18 +27,13 @@ export default {
     customAfterAppearHook() {
     },
     beforeEnter(el) {
-      if (!el.dataset) el.dataset = {};
-
-      el.dataset.oldPaddingTop = el.style.paddingTop;
-      el.dataset.oldPaddingBottom = el.style.paddingBottom;
       if (this.mode === 'expand') {
         el.style.height = '0';
-        el.style.paddingTop = 0;
-        el.style.paddingBottom = 0;
       }
       if (this.mode === 'collapse') {
         el.style.height = `${this.motionHeight}px` ;
         el.style.overflow = 'hidden';
+        el.style.opacity = 1;
       }
     },
 
@@ -61,7 +56,7 @@ export default {
         setTimeout(function () {
           Velocity(
             el,
-            { height: 0 },
+            { height: 0, opacity: 0 },
             { complete: () => {
               done();
               Store.mutations.setAnimating(false);

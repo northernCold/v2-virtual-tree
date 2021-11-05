@@ -11,8 +11,8 @@
   >
     <virtual-list
       :data="store.list"
-      :height="300"
-      :itemHeight="26"
+      :height="height"
+      :itemHeight="itemHeight"
       itemKey="id">
       <template #default="{ child }">
         <el-tree-node
@@ -72,6 +72,13 @@
     },
 
     props: {
+      height: {
+        type: Number,
+      },
+      itemHeight: {
+        type: Number,
+        default: 26,
+      },
       data: {
         type: Array
       },

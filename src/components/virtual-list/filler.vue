@@ -19,6 +19,7 @@ export default {
   props: {
     prefixCls: String,
     height: Number,
+    maxHeight: Number,
     offset: Number,
     onInnerResize: {
       type: Function,
@@ -47,10 +48,14 @@ export default {
       let style = {};
       if (this.offset !== undefined) {
         style = {
-          height: `${this.height}px`,
           position: 'relative',
           overflow: 'hidden'
         };
+        if (this.height > this.maxHeight) {
+          style.height = `${this.height}px`
+        } else {
+          style.height = `${this.maxHeight}px`
+        }
       }
       return style;
     }

@@ -66,7 +66,6 @@ export default {
     },
     scrollHeight() {
       const motionHeight = this.getNodesHeight(this.motionNodes);
-      console.log(motionHeight)
       return this.visibleCalclation.scrollHeight + motionHeight;
     },
     start() {
@@ -296,9 +295,7 @@ export default {
               Store.state.transitionMode === 'collapse'
                 ? nextIdx - motionNodesLen
                 : nextIdx,
-              Store.state.transitionMode === 'expand'
-                ? this.end + motionNodesLen
-                : this.end
+              this.end + motionNodesLen
               )
             .map(item => 
               <div ref="items" class="virtual-list-item" key={this.getKey(item)}>
@@ -337,6 +334,7 @@ export default {
               ref="filler"
               prefixCls="virtual-list"
               height={scrollHeight}
+              max-height={this.height}
               offset={this.offset}
               onInnerResize={this.collectHeight}
             >
