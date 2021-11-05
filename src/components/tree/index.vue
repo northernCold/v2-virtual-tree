@@ -74,6 +74,7 @@
     props: {
       height: {
         type: Number,
+        require: true
       },
       itemHeight: {
         type: Number,
