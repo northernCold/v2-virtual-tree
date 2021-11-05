@@ -12,7 +12,8 @@
     "core-js": "^3.19.1",
     "resize-observer-polyfill": "^1.5.1",
     "velocity-animate": "^1.5.2",
-    "vue": "^2.6.14"
+    "vue": "^2.6.14",
+    "vue-router": "^3.5.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.15",
