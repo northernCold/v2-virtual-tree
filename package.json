@@ -1,14 +1,16 @@
 {
   "name": "v2-virtual-tree",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "main": "./src/index.js",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "dev": "cross-env NODE_ENV=development webpack serve --progress --config example/webpack.config.js",
+    "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
     "core-js": "^3.19.1",
+    "resize-observer-polyfill": "^1.5.1",
+    "velocity-animate": "^1.5.2",
     "vue": "^2.6.14"
   },
   "devDependencies": {
@@ -17,6 +19,7 @@
     "@vue/cli-service": "^4.5.15",
     "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-node": "^11.1.0",
@@ -25,6 +28,9 @@
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.43.4",
     "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.14"
+    "vue-template-compiler": "^2.6.14",
+    "webpack": "^5.37.1",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2"
   }
 }
