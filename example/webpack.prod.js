@@ -1,12 +1,14 @@
 const path = require('path')
 const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const CopyPlugin = require("copy-webpack-plugin");
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = {
   entry: './example/src/main.js',
   mode: process.env.NODE_ENV,
   output: {
-    path: path.resolve(__dirname, '../example/dist'),
+    path: path.resolve(__dirname, '../docs'),
     publicPath: '',
     filename: 'build.js'
   },
@@ -63,40 +65,27 @@ module.exports = {
       'vue$': 'vue/dist/vue.esm.js'
     }
   },
-  devServer: {
-    historyApiFallback: true,
-    noInfo: true,
-    overlay: true,
-    contentBase: 'example',
-    hot: true,
-    inline: true,
-    port: 4869,
-  },
   plugins: [
+    new CleanWebpackPlugin(),
     new VueLoaderPlugin(),
-  ],
-  performance: {
-    hints: false
-  },
-}
-
-if (process.env.NODE_ENV === 'production') {
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
     new webpack.DefinePlugin({
       'process.env': {
         NODE_ENV: '"production"'
       }
     }),
+    new CopyPlugin({
+      patterns: [
+        { from: "./example/public" },
+      ],
+    }),
     new webpack.LoaderOptionsPlugin({
       minimize: true
-    })
-  ])
-  module.exports.optimization = {
+    }),
+  ],
+  performance: {
+    hints: false
+  },
+  optimization: {
     moduleIds: 'named',
-  };
-} else {
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.HotModuleReplacementPlugin(),
-  ])
+  }
 }

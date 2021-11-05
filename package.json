@@ -4,7 +4,8 @@
   "private": false,
   "main": "./src/index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development webpack serve --progress --config example/webpack.config.js",
+    "dev:example": "cross-env NODE_ENV=development webpack serve --progress --config example/webpack.config.js",
+    "build:example": "cross-env NODE_ENV=production webpack --progress --config example/webpack.prod.js",
     "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
@@ -19,6 +20,8 @@
     "@vue/cli-service": "^4.5.15",
     "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^9.0.1",
     "cross-env": "^7.0.3",
     "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.25.2",
