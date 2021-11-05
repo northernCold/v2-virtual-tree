@@ -1,12 +1,12 @@
 const path = require('path')
-const webpack = require('webpack')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: './example/src/main.js',
   mode: process.env.NODE_ENV,
   output: {
-    path: path.resolve(__dirname, '../example/dist'),
+    path: path.resolve(__dirname, '../docs'),
     publicPath: '',
     filename: 'build.js'
   },
@@ -67,36 +67,20 @@ module.exports = {
     historyApiFallback: true,
     noInfo: true,
     overlay: true,
-    contentBase: 'example',
+    contentBase: 'docs',
     hot: true,
     inline: true,
     port: 4869,
   },
   plugins: [
     new VueLoaderPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: "./example/public" },
+      ],
+    }),
   ],
   performance: {
     hints: false
   },
-}
-
-if (process.env.NODE_ENV === 'production') {
-  // http://vue-loader.vuejs.org/en/workflow/production.html
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: '"production"'
-      }
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true
-    })
-  ])
-  module.exports.optimization = {
-    moduleIds: 'named',
-  };
-} else {
-  module.exports.plugins = (module.exports.plugins || []).concat([
-    new webpack.HotModuleReplacementPlugin(),
-  ])
 }

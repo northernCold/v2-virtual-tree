@@ -4,7 +4,7 @@
   "private": false,
   "main": "./src/index.js",
   "scripts": {
-    "dev:example": "cross-env NODE_ENV=development webpack serve --progress --config example/webpack.config.js",
+    "dev": "cross-env NODE_ENV=development webpack serve --progress --config example/webpack.config.js",
     "build:example": "cross-env NODE_ENV=production webpack --progress --config example/webpack.prod.js",
     "build": "webpack --config webpack.config.js"
   },
