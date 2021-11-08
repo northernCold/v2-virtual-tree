@@ -49,6 +49,7 @@ export default {
     itemKey: String
   },
   mounted() {
+    this.visibleCalclation();
     this.$refs.component.addEventListener('wheel', this.onWheel);
   },
   computed: {
@@ -63,78 +64,6 @@ export default {
     },
     inVirtual() {
       return this.useVirtual && this.data && this.itemHeight * this.data.length > this.height;
-    },
-    scrollHeight() {
-      const motionHeight = this.getNodesHeight(this.motionNodes);
-      return this.visibleCalclation.scrollHeight + motionHeight;
-    },
-    start() {
-      return this.visibleCalclation.start;
-    },
-    end() {
-      return this.visibleCalclation.end;
-    },
-    offset() {
-      return this.visibleCalclation.offset;
-    },
-    visibleCalclation() {
-      if (!(this.virtual !== false && this.height && this.itemHeight)) {
-        return {
-          scrollHeight: undefined,
-          start: 0,
-          end: this.data.length - 1,
-          offset: undefined
-        }
-      }
-
-      // if (!this.inVirtual) {
-      //   return {
-      //     // scrollHeight: this.$refs.filler.offsetHeight || 0,
-      //     scrollHeight: 50,
-      //     start: 0,
-      //     end: this.data.length - 1,
-      //     offset: undefined
-      //   }
-      // }
-
-      let itemTop = 0;
-      let startIndex, startOffset, endIndex;
-      const dataLen = this.data.length;
-      for (let i = 0; i < dataLen; i++) {
-        const item = this.data[i];
-        const key = this.getKey(item);
-        const cacheHeight = heights.get(key);
-        const currentItemBottom = itemTop + (cacheHeight === undefined ? this.itemHeight : cacheHeight);
-
-        if (currentItemBottom >= this.scrollTop && startIndex === undefined) {
-          startIndex = i;
-          startOffset = itemTop;
-        }
-
-        if (currentItemBottom > this.scrollTop + this.height && endIndex === undefined) {
-          endIndex = i;
-        }
-
-        itemTop = currentItemBottom
-      }
-
-      if (startIndex === undefined) {
-        startIndex = 0;
-        startOffset = 0;
-      }
-      if (endIndex === undefined) {
-        endIndex = this.data.length - 1;
-      }
-
-      // Give cache to improve scroll experience
-      endIndex = Math.min(endIndex + 1, this.data.length);
-
-      return {
-        scrollHeight: itemTop,
-        start: startIndex,
-        end: endIndex,
-        offset: startOffset,
-      };
     },
     componentStyle() {
       let style;
@@ -163,9 +92,73 @@ export default {
       scrolling: false,
       scrollTop: 0,
       scrollMoving: false,
+      scrollHeight: 0,
+      start: 0,
+      end: 0,
+      offset: 0,
+    }
+  },
+  watch: {
+    data() {
+      this.visibleCalclation();
+    },
+    scrollTop() {
+      this.visibleCalclation();
+    },
+    height() {
+      this.visibleCalclation();
+    },
+    useVirtual() {
+      this.visibleCalclation();
     }
   },
   methods: {
+    visibleCalclation() {
+      if (!(this.virtual !== false && this.height && this.itemHeight)) {
+        return {
+          scrollHeight: undefined,
+          start: 0,
+          end: this.data.length - 1,
+          offset: undefined
+        }
+      }
+
+      let itemTop = 0;
+      let startIndex, startOffset, endIndex;
+      const dataLen = this.data.length;
+      for (let i = 0; i < dataLen; i++) {
+        const item = this.data[i];
+        const key = this.getKey(item);
+        const cacheHeight = heights.get(key);
+        const currentItemBottom = itemTop + (cacheHeight === undefined ? this.itemHeight : cacheHeight);
+
+        if (currentItemBottom >= this.scrollTop && startIndex === undefined) {
+          startIndex = i;
+          startOffset = itemTop;
+        }
+
+        if (currentItemBottom > this.scrollTop + this.height && endIndex === undefined) {
+          endIndex = i;
+        }
+
+        itemTop = currentItemBottom
+      }
+      if (startIndex === undefined) {
+        startIndex = 0;
+        startOffset = 0;
+      }
+      if (endIndex === undefined) {
+        endIndex = this.data.length - 1;
+      }
+
+      // Give cache to improve scroll experience
+      endIndex = Math.min(endIndex + 1, this.data.length);
+
+      this.scrollHeight = itemTop;
+      this.start = startIndex;
+      this.end = endIndex;
+      this.offset = startOffset;
+    },
     getNodesHeight(nodes = []) {
       let height = 0;
       for (let node of nodes) {
