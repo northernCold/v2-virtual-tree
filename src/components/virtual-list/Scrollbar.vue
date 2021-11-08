@@ -159,7 +159,7 @@ export default {
         const ptg = enableHeightRange ? newTop / enableHeightRange : 0;
         const newScrollTop = Math.ceil(ptg * enableScrollRange);
         this.moveRaf = raf(() => {
-          this.onScroll(newScrollTop);
+          this.$emit("scroll", newScrollTop)
         })
       }
     },
