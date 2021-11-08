@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span>节点数：{{this.data.length}}</span>
+    <span>节点数：{{count}}</span>
     <v2-virtual-tree :data="data" :height="300" default-expand-all></v2-virtual-tree>
   </div>
 </template>
@@ -9,6 +9,22 @@ export default {
   data() {
     return {
       data: this.createData()
+    }
+  },
+  computed: {
+    count() {
+      const flat = nodes => {
+        const result = [];
+        if (!nodes || nodes.length === 0) return [];
+        for (let node of nodes) {
+          result.push(node);
+          if (node.children) {
+            result.push(...flat(node.children));
+          }
+        }
+        return result;
+      }
+      return flat(this.data).length;
     }
   },
   methods: {
