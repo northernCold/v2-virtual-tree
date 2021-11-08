@@ -1,11 +1,22 @@
 <template>
   <div>
-    <v2-virtual-tree :load="loadNode" :height="300" lazy></v2-virtual-tree>
+    <span>节点数：{{count}}</span>
+    <v2-virtual-tree ref="tree" :load="loadNode" :height="300" lazy></v2-virtual-tree>
   </div>
 </template>
 <script>
 let id = 0;
 export default {
+  mounted() {
+    this.$watch("$refs.tree.store.list", (val) => {
+      this.count = val.length;
+    })
+  },
+  data() {
+    return {
+      count: 1,
+    }
+  },
   methods: {
     loadNode(node, resolve) {
       if (node.level === 0) {
@@ -32,7 +43,6 @@ export default {
           id: id,
           label: 'zone' + id++,
         }]
-        console.log(arr.map(v => v.id))
         return resolve(arr);
       }
       // setTimeout(() => {
