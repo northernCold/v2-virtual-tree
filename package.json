@@ -1,28 +1,38 @@
 {
   "name": "v2-virtual-tree",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": false,
-  "main": "./src/index.js",
+  "main": "./dist/v2-virtual-tree.js",
+  "keywords": [
+    "vue-component",
+    "virtual",
+    "vue",
+    "tree",
+    "virtual-list",
+    "virtual-tree",
+    "component"
+  ],
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack serve --progress --config example/webpack.config.js",
     "build:example": "cross-env NODE_ENV=production webpack --progress --config example/webpack.prod.js",
     "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
-    "core-js": "^3.19.1",
+    "@babel/core": "^7.16.0",
     "resize-observer-polyfill": "^1.5.1",
-    "velocity-animate": "^1.5.2",
-    "vue": "^2.6.14",
-    "vue-router": "^3.5.3"
+    "velocity-animate": "^1.5.2"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.16.0",
     "@vue/cli-plugin-babel": "^4.5.15",
     "@vue/cli-plugin-eslint": "^4.5.15",
     "@vue/cli-service": "^4.5.15",
     "@vue/eslint-config-standard": "^5.1.2",
     "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.3",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^9.0.1",
+    "core-js": "^3.19.1",
     "cross-env": "^7.0.3",
     "eslint": "^6.8.0",
     "eslint-plugin-import": "^2.25.2",
@@ -32,9 +42,16 @@
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.43.4",
     "sass-loader": "^8.0.2",
+    "vue": "^2.6.14",
+    "vue-loader": "^15.9.8",
+    "vue-router": "^3.5.3",
     "vue-template-compiler": "^2.6.14",
-    "webpack": "^5.37.1",
-    "webpack-cli": "^4.7.0",
+    "webpack": "^5.62.1",
+    "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^3.11.2"
+  },
+  "peerDependencies": {
+    "vue": "^2.6.0",
+    "vue-template-compiler": "^2.6.0"
   }
 }

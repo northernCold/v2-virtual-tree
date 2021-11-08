@@ -1,24 +1,26 @@
 # v2-virtual-tree
 
-## Project setup
-```
-npm install
-```
+v2-virtual-tree是基于[Element-ui](https://github.com/ElemeFE/element)的el-tree的代码基础上改造的**虚拟树**。
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Note
 
-### Compiles and minifies for production
-```
-npm run build
-```
+- 不支持*el-tree*原本的拖拽相关的功能
 
-### Lints and fixes files
-```
-npm run lint
-```
+- 默认虚拟化
+- 保留支持节点展开收起过渡动画:tired_face:(还有需要优化的地方)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Contrast
+
+|                      | v2-virtual-tree    | el-tree            |
+| -------------------- | ------------------ | ------------------ |
+| 懒加载               | :heavy_check_mark: | :heavy_check_mark: |
+| 拖拽                 | :x:                | :heavy_check_mark: |
+| 节点展开收起过渡动画 | :heavy_check_mark: | :heavy_check_mark: |
+| 大量数据下           | :smile:流畅        | :cry:加载慢        |
+
+
+
+
+
+
+
