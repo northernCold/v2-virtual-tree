@@ -10,6 +10,7 @@ module.exports = {
     publicPath: '',
     filename: 'build.js'
   },
+  devtool: "source-map",
   module: {
     rules: [
       {
@@ -64,12 +65,7 @@ module.exports = {
     }
   },
   devServer: {
-    historyApiFallback: true,
-    noInfo: true,
-    overlay: true,
     contentBase: 'docs',
-    hot: true,
-    inline: true,
     port: 4869,
   },
   plugins: [
@@ -80,7 +76,7 @@ module.exports = {
       ],
     }),
   ],
-  performance: {
-    hints: false
-  },
+  optimization: {
+    minimize: false,
+  }
 }
