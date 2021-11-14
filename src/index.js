@@ -1,4 +1,3 @@
-  
 import V2VirtualTree from './components/tree/index.vue'
 
 const install = (Vue) => {

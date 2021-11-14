@@ -8,9 +8,6 @@ export function flatten (nodes, skipNode, expanded = true) {
     const { parent } = node;
     if (!parent || parent.expanded === expanded || node.level === 1) {
       list.push(node)
-      if (skipNode === node) {
-        node.__motion = true;
-      }
       if (node && node.childNodes.length > 0) {
         list.push(...flatten(node.childNodes, skipNode))
       }
@@ -47,11 +44,7 @@ export default class TreeStore {
     }
   }
   flatten() {
-    let skipNode;
-    if (Store.state.animating && Store.state.expandingNode) {
-      skipNode = Store.state.expandingNode;
-    }
-    this.list = flatten(this.root.childNodes, skipNode)
+    this.list = flatten(this.root.childNodes)
   }
   filter(value) {
     const filterNodeMethod = this.filterNodeMethod;
