@@ -12,8 +12,9 @@ import { flatten } from "../tree/model/tree-store";
 const heights = new CacheMap();
 
 function flattenInCollapse (nodes) {
-  const list = [...nodes];
+  const list = [];
   for (let node of nodes) {
+    list.push(node);
     if (node.expanded) {
       list.push(...flattenInCollapse(node.childNodes));
     }
@@ -271,15 +272,14 @@ export default {
               { defaultSlot({ child: item }) }
             </div>
           );
-          motionNodesLen = restLen;
         } else {
           motionVNodes = motionNodes.map(item =>
             <div ref="items" class="virtual-list-item" key={this.getKey(item)}>
               { defaultSlot({ child: item }) }
             </div>
           );
-          motionNodesLen = motionNodes.length;
         }
+        motionNodesLen = motionNodes.length;
         nextIdx += motionNodesLen;
         vnodes.push(<collapse-transition mode={Store.state.transitionMode} motion-height={motionHeight}><div>{motionVNodes}</div></collapse-transition>)
         vnodes.push(

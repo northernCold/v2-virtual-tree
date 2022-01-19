@@ -2,7 +2,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router/index.js'
-import V2VirtualTree from '../../dist/v2-virtual-tree.js'
+import V2VirtualTree from '../../src/index.js'
+// import V2VirtualTree from '../../dist/v2-virtual-tree.js'
 
 import '../../src/index.css'
 

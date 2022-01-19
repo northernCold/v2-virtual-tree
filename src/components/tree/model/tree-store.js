@@ -5,12 +5,9 @@ import Store from '../../../store'
 export function flatten (nodes, skipNode, expanded = true) {
   const list = [];
   for (let node of nodes) {
-    const { parent } = node;
-    if (!parent || parent.expanded === expanded || node.level === 1) {
-      list.push(node)
-      if (node && node.childNodes.length > 0) {
-        list.push(...flatten(node.childNodes, skipNode))
-      }
+    list.push(node)
+    if (node && node.childNodes.length > 0 && node.expanded) {
+      list.push(...flatten(node.childNodes, skipNode))
     }
   }
   return list;
@@ -26,6 +23,7 @@ export default class TreeStore {
       }
     }
     this.nodesMap = {};
+    this.list = [];
 
     this.root = new Node({
       data: this.data,
