@@ -18,8 +18,7 @@
     "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
-    "resize-observer-polyfill": "^1.5.1",
-    "velocity-animate": "^1.5.2"
+    "resize-observer-polyfill": "^1.5.1"
   },
   "devDependencies": {
     "core-js": "^3.19.1",
