@@ -255,7 +255,9 @@ export default {
       let motionNodes = [];
       let motionVNodes = [];
       if (motionNodeIdx > -1 && Store.state.animating) {
+        // 展开/收起动画
         nextIdx = motionNodeIdx + 1;
+        // 点击展开/收起节点的前半部分节点
         vnodes = this.data.slice(this.start, nextIdx).map(item => (
           <div ref="items" class="virtual-list-item" key={this.getKey(item)}>
             { defaultSlot({ child: item }) }
@@ -266,29 +268,27 @@ export default {
           flattenInCollapse(this.data[motionNodeIdx].childNodes)
         let motionHeight = this.getNodesHeight(motionNodes)
         let motionNodesLen;
-        if (restLen < motionNodes.length && Store.state.transitionMode === 'expand') {
-          motionVNodes = motionNodes.slice(0, restLen).map(item =>
-            <div ref="items" class="virtual-list-item" key={this.getKey(item)}>
-              { defaultSlot({ child: item }) }
-            </div>
-          );
-        } else {
-          motionVNodes = motionNodes.map(item =>
-            <div ref="items" class="virtual-list-item" key={this.getKey(item)}>
-              { defaultSlot({ child: item }) }
-            </div>
-          );
-        }
-        motionNodesLen = motionNodes.length;
+        // 过渡节点
+        motionVNodes = motionNodes.slice(0, restLen).map(item =>
+          <div ref="items" class="virtual-list-item" key={this.getKey(item)}>
+            { defaultSlot({ child: item }) }
+          </div>
+        );
+       
+        motionNodesLen = motionVNodes.length;
         nextIdx += motionNodesLen;
         vnodes.push(<collapse-transition mode={Store.state.transitionMode} motion-height={motionHeight}><div>{motionVNodes}</div></collapse-transition>)
+        // 点击展开/收起节点的前半部分节点
+        // 收起时包含过渡节点
         vnodes.push(
           ...this.data
             .slice(
               Store.state.transitionMode === 'collapse'
                 ? nextIdx - motionNodesLen
                 : nextIdx,
-              this.end + motionNodesLen
+               Store.state.transitionMode === 'collapse'
+                ? this.end
+                : this.end + motionNodesLen
               )
             .map(item => 
               <div ref="items" class="virtual-list-item" key={this.getKey(item)}>
@@ -297,6 +297,7 @@ export default {
           )
         )
       } else {
+        // 滚动列表数据更新
         vnodes = this.data.slice(this.start, this.end).map(item =>
           <div ref="items" class="virtual-list-item" key={this.getKey(item)}>
             { defaultSlot({ child: item }) }
